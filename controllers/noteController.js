@@ -1,6 +1,6 @@
 let note = require("../notes");
 const slugify = require("slugify");
-const { Notebook } = require("../db/models");
+const { Notebook, Note } = require("../db/models");
 
 exports.fetchNote = async (noteId, next) => {
   try {
@@ -10,12 +10,9 @@ exports.fetchNote = async (noteId, next) => {
     next(error);
   }
 };
-exports.noteCreate = (req, res, next) => {
+exports.noteCreate = async (req, res, next) => {
   try {
-    const id = note[note.length - 1].id + 1;
-    const slug = slugify(req.body.name, { lower: true });
-    const newNote = { id, slug, ...req.body };
-    note.push(newNote);
+    const newNoteBook = await Note.create(req.body);
     res.status(201).json(newNote);
   } catch (error) {
     next(error);
@@ -24,13 +21,13 @@ exports.noteCreate = (req, res, next) => {
 
 exports.noteList = async (req, res, next) => {
   try {
-    const notes = await note.findAll({
+    const notes = await Note.findAll({
       attributes: { exclude: ["createdAt", "updatedAt", "vendorId"] },
       include: [
         {
           model: Notebook,
           as: "noteBook",
-          attributes: ["note"],
+          attributes: ["name"],
         },
       ],
     });
@@ -40,12 +37,11 @@ exports.noteList = async (req, res, next) => {
   }
 };
 
-exports.noteUpdate = (req, res, next) => {
+exports.noteUpdate = async (req, res, next) => {
   try {
-    const { noteId } = req.params;
-    const foundNote = note.find((note) => note.id === +noteId);
+    const foundNote = Note.findByPk(noteId);
     if (foundNote) {
-      for (const key in req.body) foundNote[key] = req.body[key];
+      await foundNote.update(req.boy);
       res.status(204).end();
     } else {
       res.status(404).json({ message: "note not found" });
@@ -55,12 +51,11 @@ exports.noteUpdate = (req, res, next) => {
   }
 };
 
-exports.noteDelete = (req, res, next) => {
+exports.noteDelete = async (req, res, next) => {
   try {
-    const { noteId } = req.params;
-    const foundNote = note.find((note) => note.id === +noteId);
+    const foundNote = Note.findByPk(noteId);
     if (foundNote) {
-      note = note.filter((_note) => _note.id !== +noteId);
+      await foundNote.destroy();
       res.status(204).end();
     } else {
       res.status(404).json({ message: " note not found" });
