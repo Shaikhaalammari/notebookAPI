@@ -1,4 +1,4 @@
-const noteBook = [
+const noteBooks = [
   {
     id: 1,
     name: "Diaries",
@@ -16,4 +16,4 @@ const noteBook = [
   },
 ];
 
-module.exports = noteBook;
+module.exports = noteBooks;
