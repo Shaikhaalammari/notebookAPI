@@ -26,12 +26,12 @@ exports.noteBookList = async (req, res, next) => {
       include: [
         {
           model: Note,
-          as: "note",
+
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
       ],
     });
-    res.json({ notebooks });
+    res.json(notebooks);
   } catch (error) {
     next(error);
   }

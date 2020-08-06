@@ -5,9 +5,9 @@ const note = require("../../notes");
 //a notebook has many notes
 
 Notebook.hasMany(Note, {
-  foreignKey: { fieldName: "noteBookId", allowNull: false },
+  allowNull: false,
 });
-Note.belongsTo(Notebook, { as: "noteBook" });
+Note.belongsTo(Notebook);
 
 // tag . belongsToMany (Note ,{ through : "tagsNote"
 

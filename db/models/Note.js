@@ -4,11 +4,7 @@ class Note extends Model {}
 
 Note.init(
   {
-    notebook: {
-      type: DataTypes.STRING,
-    },
-
-    note: {
+    name: {
       type: DataTypes.STRING,
     },
     tag: {

@@ -12,7 +12,7 @@ exports.fetchNote = async (noteId, next) => {
 };
 exports.noteCreate = async (req, res, next) => {
   try {
-    const newNoteBook = await Note.create(req.body);
+    const newNote = await Note.create(req.body);
     res.status(201).json(newNote);
   } catch (error) {
     next(error);
@@ -22,16 +22,16 @@ exports.noteCreate = async (req, res, next) => {
 exports.noteList = async (req, res, next) => {
   try {
     const notes = await Note.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt", "vendorId"] },
-      include: [
-        {
-          model: Notebook,
-          as: "noteBook",
-          attributes: ["name"],
-        },
-      ],
+      attributes: { exclude: ["createdAt", "updatedAt", "notebookId"] },
+      // include: [
+      //   {
+      //     model: Notebook,
+
+      //     attributes: ["name"],
+      //   },
+      // ],
     });
-    res.json({ note });
+    res.json(notes);
   } catch (error) {
     next(error);
   }
