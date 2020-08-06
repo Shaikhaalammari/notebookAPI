@@ -4,7 +4,7 @@ const { Notebook, Note } = require("../db/models");
 
 exports.fetchNote = async (noteId, next) => {
   try {
-    const note = await note.findByPk(noteId);
+    const note = await Note.findByPk(noteId);
     return note;
   } catch (error) {
     next(error);
@@ -39,9 +39,9 @@ exports.noteList = async (req, res, next) => {
 
 exports.noteUpdate = async (req, res, next) => {
   try {
-    const foundNote = Note.findByPk(noteId);
+    const foundNote = await Note.findByPk(req.params.noteId);
     if (foundNote) {
-      await foundNote.update(req.boy);
+      await foundNote.update(req.body);
       res.status(204).end();
     } else {
       res.status(404).json({ message: "note not found" });
@@ -51,18 +51,18 @@ exports.noteUpdate = async (req, res, next) => {
   }
 };
 
-exports.noteDelete = async (req, res, next) => {
-  try {
-    const foundNote = Note.findByPk(noteId);
-    if (foundNote) {
-      await foundNote.destroy();
-      res.status(204).end();
-    } else {
-      res.status(404).json({ message: " note not found" });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
+// exports.noteDelete = async (req, res, next) => {
+//   try {
+//     const foundNote = await Note.findByPk(req.params.noteId);
+//     if (foundNote) {
+//       await foundNote.destroy();
+//       res.status(204).end();
+//     } else {
+//       res.status(404).json({ message: " note not found" });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 exports.note;

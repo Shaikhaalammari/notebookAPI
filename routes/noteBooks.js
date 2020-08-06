@@ -7,7 +7,7 @@ const {
   noteBookCreate,
   noteBookList,
   noteBookUpdate,
-  noteBookDelete,
+  // noteBookDelete,
 } = require("../controllers/noteBookController");
 
 //list
@@ -16,7 +16,7 @@ router.get("/", noteBookList);
 router.post("/", noteBookCreate);
 //update
 router.put("/:noteBookId", noteBookUpdate);
-//delete
-router.delete("/:noteBookId", noteBookDelete);
+// //delete
+// router.delete("/:noteBookId", noteBookDelete);
 
 module.exports = router;

@@ -9,7 +9,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/noteBooks", noteBookRoutes);
+app.use("/notebooks", noteBookRoutes);
 app.use("/notes", noteRoutes);
 
 app.use((req, res, next) => {

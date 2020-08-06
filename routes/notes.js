@@ -7,7 +7,7 @@ const {
   noteCreate,
   noteList,
   noteUpdate,
-  noteDelete,
+  // noteDelete,
 } = require("../controllers/noteController");
 
 //list
@@ -16,7 +16,8 @@ router.get("/", noteList);
 router.post("/", noteCreate);
 //update
 router.put("/:noteId", noteUpdate);
-//delete
-router.delete("/:noteId", noteDelete);
+
+// //delete
+// router.delete("/:noteId", noteDelete);
 
 module.exports = router;

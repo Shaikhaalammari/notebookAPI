@@ -39,7 +39,7 @@ exports.noteBookList = async (req, res, next) => {
 
 exports.noteBookUpdate = async (req, res, next) => {
   try {
-    const foundNoteBook = await Notebook.findByPk(noteBookId);
+    const foundNoteBook = await Notebook.findByPk(req.params.noteBookId);
 
     if (foundNoteBook) {
       await foundNoteBook.update(req.body);
@@ -52,18 +52,18 @@ exports.noteBookUpdate = async (req, res, next) => {
   }
 };
 
-exports.noteBookDelete = async (req, res, next) => {
-  try {
-    const foundNoteBook = await Notebook.findByPk(noteBookId);
-    if (foundNoteBook) {
-      await foundNoteBook.destroy();
-      res.status(204).end();
-    } else {
-      res.status(404).json({ message: " noteBook not found" });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
+// exports.noteBookDelete = async (req, res, next) => {
+//   try {
+//     const foundNoteBook = await Notebook.findByPk(noteBookId);
+//     if (foundNoteBook) {
+//       await foundNoteBook.destroy();
+//       res.status(204).end();
+//     } else {
+//       res.status(404).json({ message: " noteBook not found" });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 exports.noteBook;
